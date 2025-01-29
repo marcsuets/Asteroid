@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerShip : MonoBehaviour
 {
     public float shipVelocity;
     
     public GameObject bullet = null;
     public float bulletSpeed;
+    public GameObject bulletAnchor;
     
     // Start is called before the first frame update
     void Start()
@@ -50,6 +51,9 @@ public class NewBehaviourScript : MonoBehaviour
         Vector3 spawnPosition = transform.position; // Posició de la nau (jugador)
         GameObject bulletNew = Instantiate(bullet, spawnPosition, Quaternion.identity);
 
+        // Establecer BulletAnchor como el padre del objeto bala
+        bulletNew.transform.SetParent(bulletAnchor.transform);
+
         // Obtenir la direcció del ratolí
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         mousePosition.z = spawnPosition.z; // Assegurar que la posició Z de la bala sigui la mateixa que la nau
@@ -65,4 +69,5 @@ public class NewBehaviourScript : MonoBehaviour
             rb.AddForce(direction * bulletSpeed, ForceMode.Impulse);
         }
     }
+
 }
